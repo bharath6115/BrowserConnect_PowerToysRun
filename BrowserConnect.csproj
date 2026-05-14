@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <NoWarn>$(NoWarn);MSB3277</NoWarn>
+    <AssemblyName>Community.PowerToys.Run.Plugin.BrowserConnect</AssemblyName>
+    <RootNamespace>Community.PowerToys.Run.Plugin.BrowserConnect</RootNamespace>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- PowerToys Run plugin references -->
+    <!-- Try multiple locations where these DLLs might be found -->
+    <Reference Include="Wox.Plugin">
+      <HintPath Condition="Exists('libs\Wox.Plugin.dll')">libs\Wox.Plugin.dll</HintPath>
+      <HintPath Condition="Exists('$(LOCALAPPDATA)\Microsoft\PowerToys\PowerToys Run\Plugins\Wox.Plugin.dll')">$(LOCALAPPDATA)\Microsoft\PowerToys\PowerToys Run\Plugins\Wox.Plugin.dll</HintPath>
+      <HintPath Condition="Exists('$(LOCALAPPDATA)\Microsoft\PowerToys\PowerToys Run\Plugins\*\Wox.Plugin.dll')">$(LOCALAPPDATA)\Microsoft\PowerToys\PowerToys Run\Plugins\*\Wox.Plugin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PowerToys.Settings.UI.Lib">
+      <HintPath>libs\PowerToys.Settings.UI.Lib.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Wox.Infrastructure">
+      <HintPath Condition="Exists('libs\Wox.Infrastructure.dll')">libs\Wox.Infrastructure.dll</HintPath>
+      <HintPath Condition="Exists('$(LOCALAPPDATA)\Microsoft\PowerToys\PowerToys Run\Plugins\Wox.Infrastructure.dll')">$(LOCALAPPDATA)\Microsoft\PowerToys\PowerToys Run\Plugins\Wox.Infrastructure.dll</HintPath>
+      <HintPath Condition="Exists('$(LOCALAPPDATA)\Microsoft\PowerToys\PowerToys Run\Plugins\*\Wox.Infrastructure.dll')">$(LOCALAPPDATA)\Microsoft\PowerToys\PowerToys Run\Plugins\*\Wox.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Images\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.73.0.4053" />
+  </ItemGroup>
+
+</Project>
