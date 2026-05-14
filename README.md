@@ -1,4 +1,6 @@
 # 🚀 BrowserConnect for PowerToys Run
+![.NET](https://img.shields.io/badge/.NET-9.0-blue)
+![Platform](https://img.shields.io/badge/Platform-Windows-blue)
 
 **BrowserConnect** is a modular, high-performance PowerToys Run plugin that allows you to search across custom engines, manage your search history with fuzzy matching, and quickly navigate to URLs—all with full support for incognito mode and a premium, icon-driven interface.
 
@@ -69,9 +71,21 @@ The plugin stores its data locally in the plugin folder (no registry bloat):
 - **`history.txt`**: Your rich search history (uses a 4-segment format).
 - **`Logs.txt`**: Internal logs for troubleshooting.
 - **`Images/`**: Cached favicons.
+  
+## 🧰 Requirements
+
+- .NET SDK **9.0 or later**
+- Windows 10/11
+- PowerToys installed
+
+> ⚠️ This project targets **.NET 9**. Older SDKs (e.g., .NET 6/7/8) will fail to build.
 
 ## 🚀 Installation
 
+0. **Prerequisite**: Make sure you have **.NET 9 SDK installed**.
+```bash
+dotnet --version
+```
 1. **Build**: Run `build-plugin.bat`.
    - _This performs a clean build, nuking old artifacts for a fresh DLL._
 2. **Install**: Run `install-plugin.bat`.
