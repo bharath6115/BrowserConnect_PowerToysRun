@@ -1,4 +1,6 @@
 # 🚀 BrowserConnect for PowerToys Run
+![.NET](https://img.shields.io/badge/.NET-9.0-blue)
+![Platform](https://img.shields.io/badge/Platform-Windows-blue)
 
 ![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)
 ![Windows](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows)
