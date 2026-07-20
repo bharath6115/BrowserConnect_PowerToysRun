@@ -11,8 +11,8 @@ Start BrowserConnect in PowerToys Run with the action keyword `@`, then enter a 
 
 - [Key Features](#-key-features)
 - [Feature Demos](#-feature-demos)
-- [Command Guide](#-command-guide)
-- [Context Menu Actions](#-context-menu-actions)
+- [Command Guide](#%EF%B8%8F-command-guide)
+- [Context Menu Actions](#%EF%B8%8F-context-menu-actions)
 - [Supported Browsers](#-supported-browsers)
 - [Local Files](#-local-files)
 - [Prerequisites](#-prerequisites)
@@ -21,7 +21,7 @@ Start BrowserConnect in PowerToys Run with the action keyword `@`, then enter a 
 - [Development](#-development)
 - [Project Structure](#-project-structure)
 - [FAQ](#-faq)
-- [Troubleshooting](#-troubleshooting)
+- [Troubleshooting](#%EF%B8%8F-troubleshooting)
 
 ## ✨ Key Features
 
@@ -88,7 +88,7 @@ These examples show the query after the `@` action keyword. For example, type `@
 | **`<alias> <query>`** | Search using a custom engine | `yt cake recipe` |
 | **`@<alias> <query>`** | Search or filter by alias | `@yt ado songs` |
 | **`<e1> <e2> : <query>`** | Multi-engine search | `ani yt : Summer Time Rendering` |
-| **`<URL>`** | Open a URL directly | `google.com -i` |
+| **`<URL>`** | Open a URL directly | `youtube.com/watch?v=dQw4w9WgXcQ` |
 | **`<cmd> -i`** | Force incognito mode | `yt -i secret` |
 | **`<alias> <query> ;`** | Fetch live provider results | `yt vivarium ;` |
 | **`!`** | View recent history | `!` |
@@ -143,7 +143,7 @@ The plugin stores its data locally in the plugin folder:
 - **`Images/`**: Bundled icons and cached engine favicons.
 - **`Thumbnails/`**: Cached live-provider thumbnails.
 
-History records the action that was opened. Normal engine searches save the cleaned query text after parsing the alias and `-i` flag. Multi-engine searches save one replayable multi-engine entry plus entries for each selected engine. Direct URLs save the normalized URL. Live provider results save the opened result title, URL, and thumbnail reference. When viewing history, BrowserConnect shows the newest unique engine/payload pairs first.
+History records the action that was opened. When viewing history, BrowserConnect shows the newest unique engine/payload pairs first.
 
 Example `searchEngines.txt` entries:
 
@@ -168,26 +168,40 @@ seriesgraph.com/show/search/%s
 - Windows with PowerToys installed.
 - PowerToys Run enabled.
 - .NET 9 SDK or later.
-
 ## 🚀 Installation
 
-1. **Clone the repo**:
+### Option 1: Install from a Release (Recommended)
+
+1. Download the latest release from the **Releases** page.
+2. Extract the contents into the PowerToys Run Plugins directory:
+
+   ```text
+   %LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\
+   ```
+3. Restart PowerToys.
+
+### Option 2: Build from Sourc
+1. **Clone the repository**:
+
    ```powershell
    git clone https://github.com/bharath6115/BrowserConnect_PowerToysRun.git
    cd BrowserConnect_PowerToysRun
    ```
-2. **Build**: Run `build-plugin.bat`.
-   - This performs a clean Release build.
-3. **Install**: Run `install-plugin.bat`.
-   - The script preserves existing `history.txt`, `searchEngines.txt`, and `google_api.txt`.
-   - It closes and restarts PowerToys automatically when possible.
-4. **Setup YouTube Live Results (Optional)**:
-   - Visit https://console.cloud.google.com and create a project.
-   - Enable "YouTube Data API v3".
+2. **Build** by running `build-plugin.bat`.
+   - Performs a clean Release build.
+3. **Install** by running `install-plugin.bat`.
+   - Preserves existing `history.txt`, `searchEngines.txt`, and `google_api.txt`.
+   - Closes and restarts PowerToys automatically when possible.
+4. **(Optional) Enable YouTube Live Results**
+   - Create a project in Google Cloud Console.
+   - Enable **YouTube Data API v3**.
    - Create an API key for public data.
-   - Add one or more API keys, one per line, to `google_api.txt` in the plugin folder:
-     `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\BrowserConnect`
-   - This enables YouTube results for searches such as `yt lofi ;`.
+   - Add one or more API keys (one per line) to:
+
+   ```text
+   %LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\BrowserConnect\google_api.txt
+   ```
+   This enables YouTube live results for searches such as `yt lofi ;`.
 
 ## 🧹 Uninstall
 
@@ -246,7 +260,7 @@ BrowserConnect can only force incognito mode when it detects a supported default
 
 **Where are my search engines stored?**
 
-Search engines are stored in `searchEngines.txt` in the plugin folder. You can open it from BrowserConnect with `-l`.
+Search engines are stored in `searchEngines.txt` in the plugin folder. You can open it from plugin by typing  `-l`.
 
 ## ⚠️ Troubleshooting
 
@@ -266,8 +280,7 @@ Search engines are stored in `searchEngines.txt` in the plugin folder. You can o
 **Browser doesn't open**
 
 - Verify your default browser is installed.
-- BrowserConnect uses the Windows default browser for normal opens.
-- Incognito mode is supported for common browsers when the browser executable can be detected.
+- BrowserConnect uses the Windows default browser for normal opens, Incognito mode is supported for common browsers when the browser executable can be detected.
 
 ---
 
