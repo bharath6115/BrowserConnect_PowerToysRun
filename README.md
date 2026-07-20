@@ -1,7 +1,4 @@
 # 🚀 BrowserConnect for PowerToys Run
-![.NET](https://img.shields.io/badge/.NET-9.0-blue)
-![Platform](https://img.shields.io/badge/Platform-Windows-blue)
-
 ![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)
 ![Windows](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows)
 ![PowerToys Run](https://img.shields.io/badge/PowerToys%20Run-plugin-0078D4)
@@ -99,8 +96,8 @@ These examples show the query after the `@` action keyword. For example, type `@
 
 ### 🛠️ Utility Commands
 
-- `-h` : Show the help menu.
-- `-a @alias URL` : Add or update an engine.
+- `-help` : Show the help menu.
+- `-add @alias URL` : Add or update an engine.
 - `-d @alias` : Delete an engine and its icons.
 - `-r` : Reload engines and history, clear icon failure cache, and clear the YouTube cache.
 - `-l` : Open `searchEngines.txt`.
@@ -115,7 +112,7 @@ BrowserConnect adds context actions based on the selected result type:
 | :---------- | :------- | :----- |
 | URL-backed results | `Ctrl+C` | Copy URL |
 | File-opening results | `Ctrl+C` | Copy file path |
-| Results with a title | `Ctrl+Shift+C` | Copy result title |
+| Live fetched results | `Ctrl+Shift+C` | Copy result title |
 | URL-backed results | `Ctrl+Shift+N` | Open in the opposite incognito state |
 | History results | `Ctrl+Del` | Delete the history entry |
 
