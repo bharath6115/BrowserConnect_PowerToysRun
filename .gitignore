@@ -354,5 +354,5 @@ MigrationBackup/
 
 # Plugin Specific
 google_api.txt
-Logs.txt
+logs.txt
 history.txt

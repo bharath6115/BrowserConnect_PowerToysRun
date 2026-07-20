@@ -17,6 +17,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BrowserConnect.Tests\**\*.cs" />
+    <EmbeddedResource Remove="BrowserConnect.Tests\**\*" />
+    <None Remove="BrowserConnect.Tests\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- PowerToys Run plugin references -->
     <!-- Try multiple locations where these DLLs might be found -->
     <Reference Include="Wox.Plugin">
