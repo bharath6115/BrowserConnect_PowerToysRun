@@ -138,7 +138,7 @@ The plugin stores its data locally in the installed plugin folder:
 - **`Images/`**: Bundled icons and cached engine favicons.
 - **`Thumbnails/`**: Cached live-provider thumbnails.
 
-History records the action that was opened. Normal engine searches save the cleaned query text after parsing the alias and `-i` flag. Multi-engine searches save one replayable multi-engine entry plus entries for each selected engine. Direct URLs save the normalized URL. Live provider results save the opened result title, URL, and thumbnail reference. When viewing history, BrowserConnect shows the newest unique engine/payload pairs first.
+History records the action that was opened. When viewing history, BrowserConnect shows the newest unique engine/payload pairs first.
 
 Example `searchEngines.txt` entries:
 
