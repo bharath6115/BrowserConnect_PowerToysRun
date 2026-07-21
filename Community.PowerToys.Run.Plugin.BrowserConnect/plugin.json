@@ -3,13 +3,12 @@
   "ActionKeyword": "@",
   "IsGlobal": false,
   "Name": "BrowserConnect",
-  "Author": "Bubluwu",
-  "Version": "1.0.0",
+  "Author": "bharath6115",
+  "Version": "0.2.1",
   "Language": "csharp",
-  "Website": "",
+  "Website": "https://github.com/bharath6115/BrowserConnect_PowerToysRun",
+  "ExecuteFileName": "Community.PowerToys.Run.Plugin.BrowserConnect.dll",
   "IcoPathDark": "Images\\browserConnect.dark.png",
   "IcoPathLight": "Images\\browserConnect.light.png",
-  "ExecuteFileName": "Community.PowerToys.Run.Plugin.BrowserConnect.dll",
-  "DynamicLoading": true,
   "IsSettingProvider": true
 }

@@ -1,88 +1,80 @@
-# 🚀 BrowserConnect for PowerToys Run
-![.NET](https://img.shields.io/badge/.NET-9.0-blue)
-![Platform](https://img.shields.io/badge/Platform-Windows-blue)
+# BrowserConnect for PowerToys Run
 
-![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)
-![Windows](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows)
-![PowerToys Run](https://img.shields.io/badge/PowerToys%20Run-plugin-0078D4)
+![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)
+![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D4?logo=windows)
+![PowerToys Run](https://img.shields.io/badge/PowerToys%20Run-Plugin-0078D4)
+![Tests](https://img.shields.io/badge/tests-MSTest-512BD4)
+![License](https://img.shields.io/github/license/bharath6115/BrowserConnect_PowerToysRun)
 
-**BrowserConnect** is a PowerToys Run plugin for searching custom engines, opening URLs, browsing in incognito mode, and searching local history with fuzzy matching.
+**BrowserConnect** is a PowerToys Run plugin for searching custom engines, opening URLs, browsing in incognito mode, fetching live provider results, and searching local history with fuzzy matching.
 
 Start BrowserConnect in PowerToys Run with the action keyword `@`, then enter a search, URL, or command.
 
-## 📚 Table of Contents
+## Table of Contents
 
-- [Key Features](#-key-features)
-- [Feature Demos](#-feature-demos)
-- [Command Guide](#-command-guide)
-- [Context Menu Actions](#-context-menu-actions)
-- [Supported Browsers](#-supported-browsers)
-- [Local Files](#-local-files)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Uninstall](#-uninstall)
-- [Development](#-development)
-- [Project Structure](#-project-structure)
-- [FAQ](#-faq)
-- [Troubleshooting](#-troubleshooting)
+- [Key Features](#key-features)
+- [Feature Demos](#feature-demos)
+- [Command Guide](#command-guide)
+- [Context Menu Actions](#context-menu-actions)
+- [Supported Browsers](#supported-browsers)
+- [Local Files](#local-files)
+- [Available Settings](#available-settings)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Uninstall](#uninstall)
+- [Development](#development)
+- [Project Structure](#project-structure)
+- [FAQ](#faq)
+- [Troubleshooting](#troubleshooting)
+- [Development Notes](#development-notes)
 
-## ✨ Key Features
+## Key Features
+- **Custom Search Engines**
+  - Create aliases such as `yt` or `github` for faster searches.
+  - Support `%s` search templates and direct URL shortcuts.
 
-- 🎯 **Custom Search Engines**:
-  - **Define Aliases**: Create shortcuts such as `yt` for YouTube or `github` for GitHub.
-  - **Search Templates**: Use `%s` to mark where the search query should be inserted into the URL.
-- 🕘 **Fuzzy History Search**:
-  - **Quick Access**: Use `!` to view recent search history.
-  - **Recent First**: Shows your newest unique entries first, then scans older history when you search.
-  - **Fuzzy Matching**: Type after `!`, such as `!code`, to search saved URLs, provider results, and normalized search queries.
-  - **Normalized Entries**: Search history stores the cleaned query BrowserConnect actually ran, so flags like `-i` and engine aliases are not mixed into normal query text.
-  - **Persistent**: History is stored locally in `history.txt`.
-  - **Delete Entries**: Delete a history entry from the result context menu.
-- 🕵️ **Incognito Search**:
-  - **On-the-Fly**: Add `-i` to a search or URL to open it privately.
-  - **URL Parsing**: URL inputs support `-i` at the start or end.
-  - **Global Setting**: Enable "Incognito by default" in PowerToys settings.
-- ⚙️ **Integrated Settings**:
-  - **Record History**: Enable or disable history tracking.
-  - **Record Incognito History**: Choose whether incognito searches are saved.
-  - **Incognito by Default**: Automatically open searches privately.
-  - **History Results Count**: Choose how many history results to show.
-  - **Max History Entries**: Choose the history file limit.
-  - **Automatically Truncate History**: Trim `history.txt` when the file limit is reached.
-- 🔎 **Smart Filtering**:
-  - **Instant Suggestions**: Type `@` followed by letters to filter matching search engines.
-- 🚀 **Multi-Engine Queries**:
-  - **Simultaneous Search**: Run the same query across multiple engines.
-  - **Format**: List engines, with or without `@`, then `:` and the query.
-  - _Example_: `yt brave : how to bake a cake`
-- 📡 **Live Provider Results**:
-  - **Direct Results**: Add `;` to supported engine searches to fetch live results in PowerToys Run.
-  - **Supported Providers**: YouTube, AniList, and SeriesGraph.
-  - **Automatic Provider Detection**: Supported providers are detected from your configured engine URLs.
-  - **History Support**: Opening a live result stores its title, target URL, and thumbnail reference so it can be reopened from history.
-  - **Thumbnail Cache**: Provider thumbnails are cached under `Thumbnails/`.
-  - **YouTube API Keys**: YouTube live results use `google_api.txt`; AniList and SeriesGraph do not require local API keys.
-- 🎨 **Icons and Context Menus**:
-  - **Automatic Favicon Fetching**: Fetches favicons for new engines.
-  - **Remembered Failures**: Failed icon downloads are remembered to avoid repeated retries.
-  - **Adaptive Icons**: Uses dark/light icons based on the Windows app theme.
-  - **Context Actions**: Copy URLs/titles/file paths, toggle incognito browsing, and delete history entries where supported.
+- **Fuzzy History Search**
+  - Search local history with `!`, including URLs, provider results, and normalized queries.
+  - Shows newest unique entries first, supports fuzzy matching, and lets you delete entries from the context menu.
 
-## 📸 Feature Demos
+- **Incognito Search**
+  - Add `-i` to searches or URLs for private browsing.
+  - Enable incognito by default from PowerToys settings.
+
+- **Integrated Settings**
+  - Configure history recording, incognito history, and default incognito mode.
+  - Control history result count, maximum history size, and automatic truncation.
+
+- **Smart Filtering**
+  - Filter configured search engines as you type.
+  - Instantly discover matching aliases without remembering every shortcut.
+
+- **Multi-Engine Queries**
+  - Search multiple engines simultaneously with a single command.
+  - Use `<engine1> <engine2> : <query>` (for example, `yt brave : how to bake a cake`).
+
+- **Live Provider Results**
+  - Append `;` to supported searches to fetch live results from YouTube, AniList, and SeriesGraph.
+  - Providers are detected automatically, cache thumbnails, and save opened results to history. YouTube supports optional API keys via `google_api.txt`.
+
+- **Icons and Context Menus**
+  - Automatically downloads favicons and adapts icons to the current Windows theme.
+  - Provides context actions for copying URLs, titles, and file paths, toggling incognito mode, and deleting history entries.
+## Feature Demos
 
 ### Search With Custom Engines
 
-![Search with custom engines](Assets/gifs/basic_search.gif)
+![Search with custom engines](docs/gifs/basic_search.gif)
 
 ### Search and Manage History
 
-![Search history and delete an entry](Assets/gifs/history_delete.gif)
+![Search history and delete an entry](docs/gifs/history_delete.gif)
 
 ### Live Provider Results
 
-![Fetch live provider results](Assets/gifs/live_search.gif)
+![Fetch live provider results](docs/gifs/live_search.gif)
 
-## ⌨️ Command Guide
+## Command Guide
 
 These examples show the query after the `@` action keyword. For example, type `@ yt cake recipe` in PowerToys Run.
 
@@ -91,23 +83,23 @@ These examples show the query after the `@` action keyword. For example, type `@
 | **`<alias> <query>`** | Search using a custom engine | `yt cake recipe` |
 | **`@<alias> <query>`** | Search or filter by alias | `@yt ado songs` |
 | **`<e1> <e2> : <query>`** | Multi-engine search | `ani yt : Summer Time Rendering` |
-| **`<URL>`** | Open a URL directly | `google.com -i` |
+| **`<URL>`** | Open a URL directly | `youtube.com/watch?v=dQw4w9WgXcQ` |
 | **`<cmd> -i`** | Force incognito mode | `yt -i secret` |
 | **`<alias> <query> ;`** | Fetch live provider results | `yt vivarium ;` |
 | **`!`** | View recent history | `!` |
 | **`!<query>`** | Fuzzy search history | `!cake` |
 
-### 🛠️ Utility Commands
+### Utility Commands
 
-- `-h` : Show the help menu.
-- `-a @alias URL` : Add or update an engine.
-- `-d @alias` : Delete an engine and its icons.
-- `-r` : Reload engines and history, clear icon failure cache, and clear the YouTube cache.
-- `-l` : Open `searchEngines.txt`.
-- `-his` : Open `history.txt`.
-- `-log` : Open `logs.txt`.
+- `-help`: Show the help menu.
+- `-add @alias URL`: Add or update an engine.
+- `-d @alias`: Delete an engine and its icons.
+- `-r`: Reload engines and history, clear icon failure cache, and clear the YouTube cache.
+- `-l`: Open `searchEngines.txt`.
+- `-his`: Open `history.txt`.
+- `-log`: Open `logs.txt`.
 
-## 🖱️ Context Menu Actions
+## Context Menu Actions
 
 BrowserConnect adds context actions based on the selected result type:
 
@@ -115,11 +107,11 @@ BrowserConnect adds context actions based on the selected result type:
 | :---------- | :------- | :----- |
 | URL-backed results | `Ctrl+C` | Copy URL |
 | File-opening results | `Ctrl+C` | Copy file path |
-| Results with a title | `Ctrl+Shift+C` | Copy result title |
+| Live fetched results | `Ctrl+Shift+C` | Copy result title |
 | URL-backed results | `Ctrl+Shift+N` | Open in the opposite incognito state |
 | History results | `Ctrl+Del` | Delete the history entry |
 
-## 🌐 Supported Browsers
+## Supported Browsers
 
 Normal browsing uses your Windows default browser. Incognito mode is supported when BrowserConnect can detect one of these browser executables:
 
@@ -135,9 +127,9 @@ Normal browsing uses your Windows default browser. Incognito mode is supported w
 
 If the default browser cannot be detected, BrowserConnect falls back to the Windows URL handler. That fallback can still open URLs normally, but it cannot force incognito mode.
 
-## 📂 Local Files
+## Local Files
 
-The plugin stores its data locally in the plugin folder:
+The plugin stores its data locally in the installed plugin folder:
 
 - **`searchEngines.txt`**: Search engine aliases, one per line: `alias URL`.
 - **`history.txt`**: Search history for normalized engine queries, multi-engine searches, direct URLs, and opened live-provider results.
@@ -165,34 +157,76 @@ youtube.com/results?search_query=%s
 anilist.co/search/anime?search=%s
 seriesgraph.com/show/search/%s
 ```
+## Available Settings
 
-## ✅ Prerequisites
+Settings are applied immediately, no PowerToys restart is required. They are available in the PowerToys Run plugin settings panel.
+
+| Setting | Default | Description |
+| :------ | :------ | :---------- |
+| `Incognito by default` | `False` | Open searches and URLs in incognito/private browsing mode unless explicitly overridden. |
+| `Record History` | `True` | Save engine searches, multi-engine searches, direct URLs, and live provider results to `history.txt`. |
+| `Record Incognito History` | `False` | Save actions opened in incognito mode to `history.txt`. |
+| `Automatically Truncate History` | `False` | Automatically trim `history.txt` when the configured history limit is reached. |
+| `Max History Entries` | `3000` | Maximum number of history entries retained when automatic truncation runs. |
+| `History Results Count` | `1500` | Maximum number of recent unique history entries available for `!` history searches. |
+
+## Prerequisites
 
 - Windows with PowerToys installed.
 - PowerToys Run enabled.
 - .NET 9 SDK or later.
 
-## 🚀 Installation
+## Installation
 
-1. **Clone the repo**:
+### Option 1: Install from a Release
+
+1. Download the latest release from the **Releases** page.
+2. Extract the contents into the PowerToys Run Plugins directory:
+
+   ```text
+   %LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\
+   ```
+
+3. Restart PowerToys.
+
+### Option 2: Build from Source
+
+1. **Clone the repository**:
+
    ```powershell
    git clone https://github.com/bharath6115/BrowserConnect_PowerToysRun.git
    cd BrowserConnect_PowerToysRun
    ```
-2. **Build**: Run `build-plugin.bat`.
-   - This performs a clean Release build.
-3. **Install**: Run `install-plugin.bat`.
-   - The script preserves existing `history.txt`, `searchEngines.txt`, and `google_api.txt`.
-   - It closes and restarts PowerToys automatically when possible.
-4. **Setup YouTube Live Results (Optional)**:
-   - Visit https://console.cloud.google.com and create a project.
-   - Enable "YouTube Data API v3".
-   - Create an API key for public data.
-   - Add one or more API keys, one per line, to `google_api.txt` in the plugin folder:
-     `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\BrowserConnect`
-   - This enables YouTube results for searches such as `yt lofi ;`.
 
-## 🧹 Uninstall
+2. **Build** by running:
+
+   ```powershell
+   scripts/build-plugin.bat
+   ```
+
+   This performs a clean Release build of `Community.PowerToys.Run.Plugin.BrowserConnect/BrowserConnect.csproj`.
+
+3. **Install** by running:
+
+   ```powershell
+   scripts/install-plugin.bat
+   ```
+
+   The install script preserves existing `history.txt`, `searchEngines.txt`, and `google_api.txt` files. It closes and restarts PowerToys automatically when possible.
+
+4. **Optional: Enable YouTube Live Results**
+   - Create a project in Google Cloud Console.
+   - Enable **YouTube Data API v3**.
+   - Create an API key for public data.
+   - Add one or more API keys, one per line, to:
+
+   ```text
+   %LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\BrowserConnect\google_api.txt
+   ```
+
+   This enables YouTube live results for searches such as `yt lofi ;`.
+
+## Uninstall
 
 Close PowerToys, then delete the BrowserConnect plugin folder:
 
@@ -202,56 +236,99 @@ Close PowerToys, then delete the BrowserConnect plugin folder:
 
 Restart PowerToys after removing the folder.
 
-## 🧪 Development
+## Development
 
-Build the plugin:
+The repository contains the plugin project, an MSTest test project, build/install scripts, documentation assets, and a modular service/provider architecture.
 
-```powershell
-dotnet build BrowserConnect.csproj
-```
-
-Run the test suite:
+Build the plugin project:
 
 ```powershell
-dotnet test BrowserConnect.Tests\BrowserConnect.Tests.csproj
+dotnet build Community.PowerToys.Run.Plugin.BrowserConnect/BrowserConnect.csproj
 ```
 
-## 🧱 Project Structure
+Build the full solution:
+
+```powershell
+dotnet build browserConnect.sln
+```
+
+Run the MSTest suite:
+
+```powershell
+dotnet test Community.PowerToys.Run.Plugin.BrowserConnect.Tests/BrowserConnect.Tests.csproj
+```
+
+## Project Structure
 
 ```text
 BrowserConnect/
-|-- Main.cs                    # Plugin entry point
-|-- Handlers/                  # Flag and history command handlers
-|-- Services/                  # Browser, engine, history, icon, context menu, and query services
-|-- Providers/                 # Live result providers
-|-- Models/                    # Provider and context models
-|-- Settings/                  # PowerToys settings
-|-- Utils/                     # Parsing, URL, result, and file helpers
-|-- BrowserConnect.Tests/      # Unit tests
-|-- libs/                      # PowerToys/Wox dependencies
-|-- Images/                    # Static icons
-|-- plugin.json                # Plugin metadata
-|-- BrowserConnect.csproj      # Project file
-|-- browserConnect.sln         # Solution file
-|-- build-plugin.bat           # Build script
-`-- install-plugin.bat         # Installation script
+|-- Community.PowerToys.Run.Plugin.BrowserConnect/
+|   |-- Services/                 # Browser, engine, history, icon, context menu, and query services
+|   |-- Providers/                # Live result providers such as YouTube, AniList, and SeriesGraph
+|   |-- Handlers/                 # Flag, history, and command handlers
+|   |-- Models/                   # Provider, history, and context models
+|   |-- Interfaces/               # Shared contracts
+|   |-- Settings/                 # PowerToys settings
+|   |-- Utils/                    # Parsing, URL, result, and file helpers
+|   |-- Consts/                   # Shared constants
+|   |-- Assets/                   # Plugin assets and packaged resources
+|   |-- Images/                   # Static icons
+|   |-- Main.cs                   # Plugin entry point
+|   |-- plugin.json               # Plugin metadata
+|   `-- BrowserConnect.csproj     # Plugin project file
+|-- Community.PowerToys.Run.Plugin.BrowserConnect.Tests/
+|   |-- Services/                 # Service-layer unit tests
+|   |-- Utils/                    # Utility tests
+|   `-- BrowserConnect.Tests.csproj
+|-- docs/
+|   `-- gifs/                     # README demos and documentation media
+|-- scripts/
+|   |-- build-plugin.bat          # Clean Release build script
+|   `-- install-plugin.bat        # Local PowerToys plugin installer
+|-- .gitignore
+|-- browserConnect.sln
+`-- README.md
 ```
 
-## ❓ FAQ
+## FAQ
 
-**Why aren't YouTube live results showing?**
+<details>
+<summary><strong>Can I add a new search engine?</strong></summary>
 
-Make sure `google_api.txt` exists in the plugin folder and contains at least one valid YouTube Data API key. Live YouTube results also require an engine URL that matches `youtube.com/results?search_query=%s`.
+Yes, You can add it using the -add flag mentioned in utility commands.<br/>
+Format: -add @\<alias> \<url>
 
-**Why isn't incognito mode working?**
+</details>
+
+<details>
+<summary><strong>Why aren't YouTube live results showing?</strong></summary>
+
+Make sure `google_api.txt` exists in the installed plugin folder and contains at least one valid YouTube Data API key. Live YouTube results also require an engine URL that matches `youtube.com/results?search_query=%s`.
+
+</details>
+
+<details>
+<summary><strong>Do AniList and SeriesGraph need API keys?</strong></summary>
+
+No. AniList and SeriesGraph live providers do not require local API keys.
+
+</details>
+
+<details>
+<summary><strong>Why isn't incognito mode working?</strong></summary>
 
 BrowserConnect can only force incognito mode when it detects a supported default browser. If detection fails, Windows opens the URL normally through the default URL handler.
 
-**Where are my search engines stored?**
+</details>
 
-Search engines are stored in `searchEngines.txt` in the plugin folder. You can open it from BrowserConnect with `-l`.
+<details>
+<summary><strong>Where are my search engines stored?</strong></summary>
 
-## ⚠️ Troubleshooting
+Search engines are stored in `searchEngines.txt` in the installed plugin folder. You can open it from the plugin by typing `-l`.
+
+</details>
+
+## Troubleshooting
 
 **Plugin doesn't appear in PowerToys Run**
 
@@ -269,14 +346,18 @@ Search engines are stored in `searchEngines.txt` in the plugin folder. You can o
 **Browser doesn't open**
 
 - Verify your default browser is installed.
-- BrowserConnect uses the Windows default browser for normal opens.
-- Incognito mode is supported for common browsers when the browser executable can be detected.
+- BrowserConnect uses the Windows default browser for normal opens. Incognito mode is supported for common browsers when the browser executable can be detected.
 
 ---
 
-## 📝 Development Notes
+## Development Notes
 
 - The plugin action keyword is `@`.
+- The plugin project is `Community.PowerToys.Run.Plugin.BrowserConnect/BrowserConnect.csproj`.
+- The test project is `Community.PowerToys.Run.Plugin.BrowserConnect.Tests/BrowserConnect.Tests.csproj`.
+- Both projects target `.NET 9` via `net9.0-windows`.
+- Tests use MSTest.
+- The codebase is organized around a service layer, provider system, command handlers, shared models, settings, and utility helpers.
 - History entries use four pipe-separated fields: `<time>|<entry_type>|<payload>|<incognito>`.
 - The payload field is URL-escaped on disk and decoded before being displayed or executed.
 - `<RS>` denotes the ASCII Record Separator (`\u001E`), used internally to encode structured payloads inside one history field.

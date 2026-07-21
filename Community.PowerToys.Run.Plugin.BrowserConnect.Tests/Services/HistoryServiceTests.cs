@@ -1,18 +1,27 @@
 using Community.PowerToys.Run.Plugin.BrowserConnect.Services;
 using Community.PowerToys.Run.Plugin.BrowserConnect.Settings;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BrowserConnect.Tests.Services;
 
-public class HistoryServiceTests : IDisposable
+[TestClass]
+public class HistoryServiceTests
 {
-    private readonly string _tempDirectory = Path.Combine(Path.GetTempPath(), "BrowserConnect.Tests", Guid.NewGuid().ToString("N"));
+    private string _tempDirectory = null!;
 
-    public HistoryServiceTests()
+    [TestInitialize]
+    public void Setup()
     {
+        _tempDirectory = Path.Combine(
+            Path.GetTempPath(),
+            "BrowserConnect.Tests",
+            Guid.NewGuid().ToString("N")
+        );
+
         Directory.CreateDirectory(_tempDirectory);
     }
 
-    [Fact]
+    [TestMethod]
     public void SaveToHistory_WritesEntries_WhenHistoryIsEnabled()
     {
         string historyPath = Path.Combine(_tempDirectory, "history.txt");
@@ -21,11 +30,13 @@ public class HistoryServiceTests : IDisposable
 
         service.SaveToHistory("lo-fi beats", "yt", inIncognito: false);
 
-        string line = Assert.Single(File.ReadAllLines(historyPath));
-        Assert.Contains("|yt|lo-fi%20beats|False", line);
+        string[] lines = File.ReadAllLines(historyPath);
+
+        Assert.AreEqual(1, lines.Length);
+        StringAssert.Contains(lines[0], "|yt|lo-fi%20beats|False");
     }
 
-    [Fact]
+    [TestMethod]
     public void SaveToHistory_SkipsIncognitoEntries_WhenIncognitoHistoryIsDisabled()
     {
         string historyPath = Path.Combine(_tempDirectory, "history.txt");
@@ -34,14 +45,15 @@ public class HistoryServiceTests : IDisposable
             IsHistoryEnabled = true,
             RecordIncognitoHistory = false,
         };
+
         var service = new HistoryService(historyPath, settings);
 
         service.SaveToHistory("secret query", "google", inIncognito: true);
 
-        Assert.False(File.Exists(historyPath));
+        Assert.IsFalse(File.Exists(historyPath));
     }
 
-    [Fact]
+    [TestMethod]
     public void SaveToHistory_WritesIncognitoEntries_WhenIncognitoHistoryIsEnabled()
     {
         string historyPath = Path.Combine(_tempDirectory, "history.txt");
@@ -50,15 +62,18 @@ public class HistoryServiceTests : IDisposable
             IsHistoryEnabled = true,
             RecordIncognitoHistory = true,
         };
+
         var service = new HistoryService(historyPath, settings);
 
         service.SaveToHistory("-i secret query", "google", inIncognito: true);
 
-        string line = Assert.Single(File.ReadAllLines(historyPath));
-        Assert.Contains("|google|-i%20secret%20query|True", line);
+        string[] lines = File.ReadAllLines(historyPath);
+
+        Assert.AreEqual(1, lines.Length);
+        StringAssert.Contains(lines[0], "|google|-i%20secret%20query|True");
     }
 
-    [Fact]
+    [TestMethod]
     public void SaveToHistory_SkipsEntries_WhenHistoryIsDisabled()
     {
         string historyPath = Path.Combine(_tempDirectory, "history.txt");
@@ -67,10 +82,10 @@ public class HistoryServiceTests : IDisposable
 
         service.SaveToHistory("lo-fi beats", "yt", inIncognito: false);
 
-        Assert.False(File.Exists(historyPath));
+        Assert.IsFalse(File.Exists(historyPath));
     }
 
-    [Fact]
+    [TestMethod]
     public void DeleteEntry_RemovesEntryFromFileAndCache()
     {
         string historyPath = Path.Combine(_tempDirectory, "history.txt");
@@ -79,16 +94,28 @@ public class HistoryServiceTests : IDisposable
 
         service.SaveToHistory("first query", "google", inIncognito: false);
         service.SaveToHistory("second query", "yt", inIncognito: false);
-        string entryToDelete = service.GetHistoryCache().Single(line => line.Contains("|google|first%20query|False"));
+
+        string entryToDelete = service
+            .GetHistoryCache()
+            .Single(line => line.Contains("|google|first%20query|False"));
 
         service.DeleteEntry(entryToDelete);
 
-        Assert.DoesNotContain(entryToDelete, service.GetHistoryCache());
-        Assert.DoesNotContain(entryToDelete, File.ReadAllLines(historyPath));
-        Assert.Single(File.ReadAllLines(historyPath));
+        CollectionAssert.DoesNotContain(
+            service.GetHistoryCache().ToList(),
+            entryToDelete
+        );
+
+        CollectionAssert.DoesNotContain(
+            File.ReadAllLines(historyPath).ToList(),
+            entryToDelete
+        );
+
+        Assert.AreEqual(1, File.ReadAllLines(historyPath).Length);
     }
 
-    public void Dispose()
+    [TestCleanup]
+    public void Cleanup()
     {
         if (Directory.Exists(_tempDirectory))
         {

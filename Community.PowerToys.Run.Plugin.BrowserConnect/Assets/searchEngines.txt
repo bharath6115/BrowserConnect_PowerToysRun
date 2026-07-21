@@ -1,6 +1,8 @@
 google https://www.google.com/search?q=%s
 brave https://search.brave.com/search?q=%s
 yt https://www.youtube.com/results?search_query=%s
+sg https://seriesgraph.com/show/search/%s
+ani https://anilist.co/search/anime?search=%s
 cgpt https://chatgpt.com/#autoSubmit=1&prompt=%s
 yan https://yandex.com/search/?text=%s
 gem https://gemini.google.com/#autoSubmit=1&prompt=%s

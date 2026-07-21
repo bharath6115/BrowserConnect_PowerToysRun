@@ -11,15 +11,22 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <NoWarn>$(NoWarn);MSB3277</NoWarn>
+
     <AssemblyName>Community.PowerToys.Run.Plugin.BrowserConnect</AssemblyName>
     <RootNamespace>Community.PowerToys.Run.Plugin.BrowserConnect</RootNamespace>
+    
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+    <Version>0.2.1</Version>
+    <AssemblyVersion>0.2.1.0</AssemblyVersion>
+    <FileVersion>0.2.1.0</FileVersion>
+
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="BrowserConnect.Tests\**\*.cs" />
-    <EmbeddedResource Remove="BrowserConnect.Tests\**\*" />
-    <None Remove="BrowserConnect.Tests\**\*" />
+    <Compile Remove="Community.PowerToys.Run.Plugin.BrowserConnect.Tests\**\*.cs" />
+    <EmbeddedResource Remove="Community.PowerToys.Run.Plugin.BrowserConnect.Tests\**\*" />
+    <None Remove="Community.PowerToys.Run.Plugin.BrowserConnect.Tests\**\*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,10 +58,6 @@
     <None Include="Images\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.73.0.4053" />
   </ItemGroup>
 
 </Project>

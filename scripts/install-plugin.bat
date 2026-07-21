@@ -1,6 +1,9 @@
 @echo off
 setlocal enabledelayedexpansion
 
+REM Move to repository root
+cd /d "%~dp0.."
+
 echo Closing PowerToys...
 set "RETRY_COUNT=0"
 :KILL_LOOP
@@ -24,7 +27,7 @@ echo Installing BrowserConnect plugin to PowerToys Run...
 echo.
 
 set PLUGIN_DIR=%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\BrowserConnect
-set ENGINES_FILE=searchEngines.txt
+set ENGINES_FILE=Community.PowerToys.Run.Plugin.BrowserConnect\Assets\searchEngines.txt
 
 REM Delete existing files to ensure a clean install, but PRESERVE history.txt and searchEngines.txt
 if exist "%PLUGIN_DIR%" (
@@ -47,7 +50,7 @@ REM Create fresh plugin directory
 if not exist "%PLUGIN_DIR%" mkdir "%PLUGIN_DIR%" 2>nul
 echo Plugin directory: %PLUGIN_DIR%
 
-set BUILD_OUTPUT=bin\Release\net9.0-windows
+set BUILD_OUTPUT=Community.PowerToys.Run.Plugin.BrowserConnect\bin\Release\net9.0-windows
 
 timeout /t 3 /nobreak >nul
 
@@ -81,24 +84,24 @@ for %%f in ("%BUILD_OUTPUT%\*.dll") do (
 echo Copied dependencies
 
 REM Copy plugin.json
-if exist "plugin.json" (
-    copy /Y "plugin.json" "%PLUGIN_DIR%\"
+if exist "Community.PowerToys.Run.Plugin.BrowserConnect\plugin.json" (
+    copy /Y "Community.PowerToys.Run.Plugin.BrowserConnect\plugin.json" "%PLUGIN_DIR%\"
     if %ERRORLEVEL% NEQ 0 (
         echo Retrying copying plugin.json in 3 seconds...
         timeout /t 3 /nobreak >nul
-        copy /Y "plugin.json" "%PLUGIN_DIR%\"
+        copy /Y "Community.PowerToys.Run.Plugin.BrowserConnect\plugin.json" "%PLUGIN_DIR%\"
     )
     echo Copied plugin.json
 )
 
 REM Copy Images directory (clean copy since we deleted it above)
-if exist "Images" (
+if exist "Community.PowerToys.Run.Plugin.BrowserConnect\Images" (
     mkdir "%PLUGIN_DIR%\Images"
-    copy /Y "Images\*" "%PLUGIN_DIR%\Images\"
+    copy /Y "Community.PowerToys.Run.Plugin.BrowserConnect\Images\*" "%PLUGIN_DIR%\Images\"
     if %ERRORLEVEL% NEQ 0 (
         echo Retrying copying Images in 3 seconds...
         timeout /t 3 /nobreak >nul
-        copy /Y "Images\*" "%PLUGIN_DIR%\Images\"
+        copy /Y "Community.PowerToys.Run.Plugin.BrowserConnect\Images\*" "%PLUGIN_DIR%\Images\"
     )
     echo Copied images
 )
@@ -133,8 +136,8 @@ echo.
 echo Plugin installed successfully!
 
 echo Cleaning up build artifacts...
-rd /s /q bin >nul 2>&1
-rd /s /q obj >nul 2>&1
+rd /s /q Community.PowerToys.Run.Plugin.BrowserConnect\bin >nul 2>&1
+rd /s /q Community.PowerToys.Run.Plugin.BrowserConnect\obj >nul 2>&1
 
 echo Starting PowerToys...
 if exist "%LOCALAPPDATA%\PowerToys\PowerToys.exe" (
