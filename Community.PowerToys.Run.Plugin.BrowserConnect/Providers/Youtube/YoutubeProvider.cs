@@ -13,9 +13,10 @@ namespace Community.PowerToys.Run.Plugin.BrowserConnect.Providers.Youtube;
 
 public class YoutubeProvider : ISearchProvider
 {
-    private int _youtubeApiKeysIndex = 0;
-    private readonly string[] _youtubeApiKeys;
-    //TODO: Cache clearing.
+    private int _youtubeApiKeyIndex = 0;
+    private volatile string[] _youtubeApiKeys = [];
+    private readonly string _apiPath;
+    //TODO: Auto Cache clearing.
     private readonly ConcurrentDictionary<string, Task<List<CustomSearchResult>>> _youtubeQueriesCache = new();
     private static readonly HttpClient _httpClient = new()
     {
@@ -28,23 +29,10 @@ public class YoutubeProvider : ISearchProvider
 
     public YoutubeProvider()
     {
-        // Initialize API Key
-        string apiPath = BrowserPlugin.pluginDir != null ? Path.Combine(BrowserPlugin.pluginDir, "google_api.txt") : "";
-        // TODO: Document plaintext API key storage or protect this file with Windows DPAPI.
-        if (!string.IsNullOrEmpty(apiPath) && File.Exists(apiPath))
-        {
-            _youtubeApiKeys = [.. File.ReadAllLines(apiPath).Select(k => k.Trim()).Where(k => !string.IsNullOrWhiteSpace(k))];
-        }
-        else
-        {
-            _youtubeApiKeys = [];
-            // Create a template file so the user knows where to put their key
-            if (!string.IsNullOrEmpty(apiPath))
-            {
-                try { File.WriteAllText(apiPath, "YOUR_API_KEYS_HERE"); } catch { }
-            }
-        }
+        _apiPath = BrowserPlugin.pluginDir != null ? Path.Combine(BrowserPlugin.pluginDir, "google_api.txt") : "";
+        LoadYoutubeApiKeys();
     }
+
     /// <summary>
     /// Returns YouTube video results and caches successful lookups in memory.
     /// </summary>
@@ -63,6 +51,7 @@ public class YoutubeProvider : ISearchProvider
             throw;
         }
     }
+
     //TODO: Implement pagination
     //TODO: Refactor httpClient common code
     private async Task<List<CustomSearchResult>> FetchYoutubeResultsAsync(string query)
@@ -79,7 +68,7 @@ public class YoutubeProvider : ISearchProvider
         for (int attempt = 0; attempt < _youtubeApiKeys.Length; attempt++)
         {
             var (apiKey, keyIndex) = GetNextApiKey();
-            Logger.Log($"Using YouTube API key #{keyIndex + 1} (Attempt {keyIndex + 1}/{_youtubeApiKeys.Length})", "TRACE");
+            Logger.Log($"Using YouTube API key #{keyIndex + 1} (Attempt {attempt + 1}/{_youtubeApiKeys.Length})", "TRACE");
 
             string url =
                 $"https://www.googleapis.com/youtube/v3/search" +
@@ -155,22 +144,60 @@ public class YoutubeProvider : ISearchProvider
         Logger.Log("All configured YouTube API keys have exhausted their quota.", "ERROR");
         return results;
     }
+
     /// <summary>
     /// Returns the next API Key.
     /// Increments the index in an atomic operation for multithread safety.
     /// </summary>
     private (string ApiKey, int index) GetNextApiKey()
     {
-        int index = Interlocked.Increment(ref _youtubeApiKeysIndex) - 1;
+        int index = Interlocked.Increment(ref _youtubeApiKeyIndex) - 1;
         return (_youtubeApiKeys[index % _youtubeApiKeys.Length], index % _youtubeApiKeys.Length);
     }
-
-    public void ClearCache() => _youtubeQueriesCache.Clear();
 
     private static bool ShouldRetryWithNextKey(YoutubeErrorResponse? error)
     {
         if (error?.Error?.Errors is null) return false;
 
         return error.Error.Errors.Any(e => e.Reason is "quotaExceeded" or "dailyLimitExceeded");
+    }
+
+    // TODO: Document plaintext API key storage or protect this file with Windows DPAPI.
+    private void LoadYoutubeApiKeys()
+    {
+        if (!string.IsNullOrEmpty(_apiPath) && File.Exists(_apiPath))
+        {
+            _youtubeApiKeys = 
+            [
+                .. File.ReadAllLines(_apiPath)
+                    .Select(k => k.Trim())
+                    .Where(k => !string.IsNullOrWhiteSpace(k) && k != "YOUR_API_KEYS_HERE")
+            ];
+            Logger.Log($"Loaded {_youtubeApiKeys.Length} YouTube API keys.", "INFO");
+        }
+        else
+        {
+            _youtubeApiKeys = [];
+
+            if (!string.IsNullOrEmpty(_apiPath))
+            {
+                try
+                {
+                    File.WriteAllText(_apiPath, "YOUR_API_KEYS_HERE");
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log($"Failed to create YouTube API key file: {ex.Message}", "ERROR");
+                }
+            }
+        }
+        _youtubeApiKeyIndex = 0;
+    }
+    
+    public void ClearCache() => _youtubeQueriesCache.Clear();
+
+    public void ReloadYoutubeApiData(){
+        LoadYoutubeApiKeys();
+        ClearCache();
     }
 }

@@ -21,6 +21,7 @@ Start BrowserConnect in PowerToys Run with the action keyword `@`, then enter a 
 - [Available Settings](#available-settings)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Usage](#usage)
 - [Uninstall](#uninstall)
 - [Development](#development)
 - [Project Structure](#project-structure)
@@ -180,7 +181,7 @@ Settings are applied immediately, no PowerToys restart is required. They are ava
 
 ### Option 1: Install from a Release
 
-1. Download the latest release from the **Releases** page.
+1. Download the latest release from the [Releases](https://github.com/bharath6115/BrowserConnect_PowerToysRun/releases) page.
 2. Extract the contents into the PowerToys Run Plugins directory:
 
    ```text
@@ -226,6 +227,47 @@ Settings are applied immediately, no PowerToys restart is required. They are ava
 
    This enables YouTube live results for searches such as `yt lofi ;`.
 
+## Usage
+
+1. Open PowerToys Run with `Alt + Space`.
+
+2. Use the `@` action keyword followed by a search engine key and query:
+
+   `@google cats`  
+   `@yt lofi`
+
+3. Use ⬆️ and ⬇️ keys to select a result and press Enter to open it.
+
+4. Use context actions to perform additional actions such as copying URLs/titles, opening links in normal or incognito mode, and deleting history entries.
+
+### Search
+
+BrowserConnect supports custom search engines with live results for supported providers, including thumbnails where available.
+
+<p>
+  <img src="docs/screenshots/BrowseEngines.png" width="49%" />
+  <img src="docs/screenshots/BrowseLive.png" width="49%" />
+</p>
+
+### URLs
+
+Enter a URL directly to open it in your browser:
+
+![](docs/screenshots/BrowseUrl.png)
+
+### History
+
+Previously searched queries can be searched and reused from query history.
+
+![](docs/screenshots/History.png)
+
+### Search Engine Management
+
+Add, edit, or remove search engines directly from BrowserConnect settings without modifying configuration files.
+
+![](docs/screenshots/EnginesCRUD.png)
+
+### 
 ## Uninstall
 
 Close PowerToys, then delete the BrowserConnect plugin folder:

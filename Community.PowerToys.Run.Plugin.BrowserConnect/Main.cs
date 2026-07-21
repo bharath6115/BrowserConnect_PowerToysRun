@@ -155,7 +155,7 @@ namespace Community.PowerToys.Run.Plugin.BrowserConnect
 
 
         /*----------HELPER METHODS----------*/
-        public void ClearCache() => _youtubeService.ClearCache();
+        public void ReloadYoutubeApiData() => _youtubeService.ReloadYoutubeApiData();
 
         /*----------SETTINGS PANEL----------*/
         public System.Windows.Controls.Control CreateSettingPanel()

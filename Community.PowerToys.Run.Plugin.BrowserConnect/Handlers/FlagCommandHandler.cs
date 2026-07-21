@@ -117,7 +117,7 @@ public class FlagCommandHandler
         return new List<Result> {
             new Result {
                 Title = "Refresh Search Engines",
-                SubTitle = $"Loaded {_engineService.Count} search engines from {_engineService.GetEnginesPath()}",
+                SubTitle = $"Reload {_engineService.Count} search engines from {_engineService.GetEnginesPath()} and clear cache",
                 IcoPath = _iconService.GetIconPath(IconConsts.REFRESH),
                 Action = _ =>
                 {
@@ -125,7 +125,7 @@ public class FlagCommandHandler
                     _engineService.LoadSearchEngines();
                     _historyService.LoadHistoryCache();
                     _iconService.ClearFailedCache();
-                    _plugin.ClearCache();
+                    _plugin.ReloadYoutubeApiData();
                     Logger.Log($"Refresh complete. Engines loaded: {_engineService.Count}, History cache reloaded, YouTube cache cleared.", "INFO");
                     return true;
                 },

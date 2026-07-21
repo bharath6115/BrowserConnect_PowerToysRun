@@ -18,5 +18,5 @@ public class YoutubeService : SearchServiceBase
     {
         return _provider.SearchAsync(query);
     }
-    public void ClearCache() => _provider.ClearCache();
+    public void ReloadYoutubeApiData() => _provider.ReloadYoutubeApiData();
 }
