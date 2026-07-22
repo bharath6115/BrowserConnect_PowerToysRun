@@ -19,15 +19,27 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b 1
 )
 
-echo Building plugin...
-dotnet build "Community.PowerToys.Run.Plugin.BrowserConnect\BrowserConnect.csproj" -c Release
+echo.
+echo Building x64 plugin...
+dotnet build "Community.PowerToys.Run.Plugin.BrowserConnect\BrowserConnect.csproj" -c Release -p:Platform=x64
 
 if %ERRORLEVEL% NEQ 0 (
     echo.
-    echo Build failed.
+    echo x64 build failed.
     pause
     exit /b 1
 )
 
 echo.
-echo Build succeeded.
+echo Building ARM64 plugin...
+dotnet build "Community.PowerToys.Run.Plugin.BrowserConnect\BrowserConnect.csproj" -c Release -p:Platform=ARM64
+
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo ARM64 build failed.
+    pause
+    exit /b 1
+)
+
+echo.
+echo Both x64 and ARM64 builds succeeded.

@@ -1,7 +1,7 @@
 # BrowserConnect for PowerToys Run
 
 ![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)
-![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D4?logo=windows)
+![Windows](https://img.shields.io/badge/Windows-10%2F11%20x64%20%7C%20ARM64-0078D4?logo=windows)
 ![PowerToys Run](https://img.shields.io/badge/PowerToys%20Run-Plugin-0078D4)
 ![Tests](https://img.shields.io/badge/tests-MSTest-512BD4)
 ![License](https://img.shields.io/github/license/bharath6115/BrowserConnect_PowerToysRun)
@@ -175,7 +175,7 @@ Settings are applied immediately, no PowerToys restart is required. They are ava
 
 - Windows with PowerToys installed.
 - PowerToys Run enabled.
-- .NET 9 SDK or later.
+- .NET 9 or later.
 
 ## Installation
 
@@ -215,7 +215,7 @@ Settings are applied immediately, no PowerToys restart is required. They are ava
 
    The install script preserves existing `history.txt`, `searchEngines.txt`, and `google_api.txt` files. It closes and restarts PowerToys automatically when possible.
 
-4. **Optional: Enable YouTube Live Results**
+4. <span id="Youtube-Live-Results"></span>**Optional: Enable YouTube Live Results**
    - Create a project in Google Cloud Console.
    - Enable **YouTube Data API v3**.
    - Create an API key for public data.
@@ -265,9 +265,9 @@ Previously searched queries can be searched and reused from query history.
 
 Add, edit, or remove search engines directly from BrowserConnect settings without modifying configuration files.
 
-![](docs/screenshots/EnginesCRUD.png)
+![](docs/screenshots/AddOrUpdateEngine.png)
+![](docs/screenshots/DeleteEngine.png)
 
-### 
 ## Uninstall
 
 Close PowerToys, then delete the BrowserConnect plugin folder:
@@ -335,9 +335,9 @@ BrowserConnect/
 ## FAQ
 
 <details>
-<summary><strong>Can I add a new search engine?</strong></summary>
+<summary><strong>Can I add or change url of a search engine?</strong></summary>
 
-Yes, You can add it using the -add flag mentioned in utility commands.<br/>
+You can add or change url using the -add flag mentioned in [utility commands](#utility-commands).<br/>
 Format: -add @\<alias> \<url>
 
 </details>
@@ -372,6 +372,15 @@ Search engines are stored in `searchEngines.txt` in the installed plugin folder.
 
 ## Troubleshooting
 
+**Alt + Space is not doing anything**
+
+- Check if power toys is running and if power toys run is enabled.
+- Check and run the activation shortcut of power toys run.
+
+**Youtube Live Search is returning a error message**
+
+- Check if the google_api.txt file is populated by following the steps mentioned [here](#youtube-live-results).
+
 **Plugin doesn't appear in PowerToys Run**
 
 - Check that the plugin is installed in:
@@ -398,6 +407,7 @@ Search engines are stored in `searchEngines.txt` in the installed plugin folder.
 - The plugin project is `Community.PowerToys.Run.Plugin.BrowserConnect/BrowserConnect.csproj`.
 - The test project is `Community.PowerToys.Run.Plugin.BrowserConnect.Tests/BrowserConnect.Tests.csproj`.
 - Both projects target `.NET 9` via `net9.0-windows`.
+- Plugin builds support x64 and ARM64 through PowerToys dependency packages.
 - Tests use MSTest.
 - The codebase is organized around a service layer, provider system, command handlers, shared models, settings, and utility helpers.
 - History entries use four pipe-separated fields: `<time>|<entry_type>|<payload>|<incognito>`.

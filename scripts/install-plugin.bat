@@ -50,7 +50,16 @@ REM Create fresh plugin directory
 if not exist "%PLUGIN_DIR%" mkdir "%PLUGIN_DIR%" 2>nul
 echo Plugin directory: %PLUGIN_DIR%
 
-set BUILD_OUTPUT=Community.PowerToys.Run.Plugin.BrowserConnect\bin\Release\net9.0-windows
+REM Select architecture (default: x64)
+if "%~1"=="" (
+    set PLATFORM=x64
+) else (
+    set PLATFORM=%~1
+)
+
+echo Installing %PLATFORM% build...
+
+set BUILD_OUTPUT=Community.PowerToys.Run.Plugin.BrowserConnect\bin\%PLATFORM%\Release\net9.0-windows
 
 timeout /t 3 /nobreak >nul
 
