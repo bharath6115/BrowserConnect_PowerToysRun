@@ -175,8 +175,9 @@ Settings are applied immediately, no PowerToys restart is required. They are ava
 
 - Windows with PowerToys installed.
 - PowerToys Run enabled.
-- .NET 9 or later.
-
+- .NET 9 or later. [Download here](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+  - **For development:** .NET 9 SDK or later
+  - **For using the plugin:** .NET 9 Desktop Runtime or later
 ## Installation
 
 ### Option 1: Install from a Release
